@@ -1,10 +1,11 @@
+import os
 import requests
 from bs4 import BeautifulSoup
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
 
-# ✅ Aapka Naya Bot Token
-BOT_TOKEN = "8006374981:AAEPEr2n3lxnAqIog732j9LLnuimWN37ghw"
+# ✅ Token from Render Environment
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
@@ -70,9 +71,3 @@ async def handle_html_link(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def main():
     app = ApplicationBuilder().token(BOT_TOKEN).build()
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_html_link))
-    app.run_polling()
-
-if __name__ == "__main__":
-    main()
