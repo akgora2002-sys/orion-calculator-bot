@@ -70,4 +70,10 @@ async def handle_html_link(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
 def main():
+    if not BOT_TOKEN:
+        raise ValueError("❌ BOT_TOKEN is not set. Please check Render environment variables.")
+
     app = ApplicationBuilder().token(BOT_TOKEN).build()
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_html_link))
+    app.run_polling()
