@@ -1,10 +1,9 @@
 services:
-  - type: web
-    name: orion-marks-calculator
+  - type: worker
+    name: orion-calculator-bot
     env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: python main.py
-    region: singapore
-    plan: free
-    branch: main
-    autoDeploy: true
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python main.py"
+    envVars:
+      - key: BOT_TOKEN
+        sync: true
